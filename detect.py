@@ -91,7 +91,8 @@ def run(
     (save_dir / 'labels' if save_txt else save_dir).mkdir(parents=True, exist_ok=True)  # make dir
 
     # Load model
-    device = select_device(device)
+#     device = select_device(device)
+    device = 'cpu'
     model = DetectMultiBackend(weights, device=device, dnn=dnn, data=data, fp16=half)
     stride, names, pt = model.stride, model.names, model.pt
     imgsz = check_img_size(imgsz, s=stride)  # check image size
