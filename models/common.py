@@ -494,6 +494,7 @@ class DetectMultiBackend(nn.Module):
             names = yaml_load(ROOT / 'data/ImageNet.yaml')['names']  # human-readable names
 
         self.__dict__.update(locals())  # assign all variables to self
+        print('printing from common.py class DetectMultiBackend yay')
 
     def forward(self, im, augment=False, visualize=False):
         # YOLOv5 MultiBackend inference
