@@ -716,7 +716,7 @@ class AutoShape(nn.Module):
 class Detections:
     # YOLOv5 detections class for inference results
     def __init__(self, ims, pred, files, times=(0, 0, 0), names=None, shape=None):
-        super().__init__()
+#         super().__init__()
 #         d = pred[0].device  # device
         d = torch.device('cpu')
         gn = [torch.tensor([*(im.shape[i] for i in [1, 0, 1, 0]), 1, 1], device=d) for im in ims]  # normalizations
@@ -735,6 +735,7 @@ class Detections:
         print('models/common.py class Detections __init__ yay')
 
     def _run(self, pprint=False, show=False, save=False, crop=False, render=False, labels=True, save_dir=Path('')):
+        print('models/common.py class Detections _run yay')
         s, crops = '', []
         for i, (im, pred) in enumerate(zip(self.ims, self.pred)):
             s += f'\nimage {i + 1}/{len(self.pred)}: {im.shape[0]}x{im.shape[1]} '  # string
