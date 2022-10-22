@@ -717,7 +717,8 @@ class Detections:
     # YOLOv5 detections class for inference results
     def __init__(self, ims, pred, files, times=(0, 0, 0), names=None, shape=None):
         super().__init__()
-        d = pred[0].device  # device
+#         d = pred[0].device  # device
+        d = torch.device('cpu')
         gn = [torch.tensor([*(im.shape[i] for i in [1, 0, 1, 0]), 1, 1], device=d) for im in ims]  # normalizations
         self.ims = ims  # list of images as numpy arrays
         self.pred = pred  # list of tensors pred[0] = (xyxy, conf, cls)
@@ -731,6 +732,7 @@ class Detections:
         self.n = len(self.pred)  # number of images (batch size)
         self.t = tuple(x.t / self.n * 1E3 for x in times)  # timestamps (ms)
         self.s = tuple(shape)  # inference BCHW shape
+        print('models/common.py class Detections __init__ yay')
 
     def _run(self, pprint=False, show=False, save=False, crop=False, render=False, labels=True, save_dir=Path('')):
         s, crops = '', []
