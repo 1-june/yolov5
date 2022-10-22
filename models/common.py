@@ -626,7 +626,7 @@ class AutoShape(nn.Module):
     def __init__(self, model, verbose=True):
         super().__init__()
         if verbose:
-            LOGGER.info('Adding AutoShape... ')
+            LOGGER.info('Adding AutoShape.............. ')
             print('common.py class AutoShape __init__')
         copy_attr(self, model, include=('yaml', 'nc', 'hyp', 'names', 'stride', 'abc'), exclude=())  # copy attributes
         self.dmb = isinstance(model, DetectMultiBackend)  # DetectMultiBackend() instance
