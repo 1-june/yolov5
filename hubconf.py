@@ -13,7 +13,7 @@ Usage:
 import torch
 
 
-def _create(name, pretrained=True, channels=3, classes=80, autoshape=True, verbose=True, device=None):
+def _create(name, pretrained=True, channels=3, classes=80, autoshape=True, verbose=True, device=torch.device('cpu')):
     """Creates or loads a YOLOv5 model
 
     Arguments:
@@ -28,6 +28,7 @@ def _create(name, pretrained=True, channels=3, classes=80, autoshape=True, verbo
     Returns:
         YOLOv5 model
     """
+    print('hubconf.py _create yay')
     from pathlib import Path
 
     from models.common import AutoShape, DetectMultiBackend
