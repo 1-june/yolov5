@@ -79,7 +79,8 @@ class Detect(nn.Module):
         return x if self.training else (torch.cat(z, 1),) if self.export else (torch.cat(z, 1), x)
 
     def _make_grid(self, nx=20, ny=20, i=0, torch_1_10=check_version(torch.__version__, '1.10.0')):
-        d = self.anchors[i].device
+#         d = self.anchors[i].device
+        d = torch.device('cpu')
         t = self.anchors[i].dtype
         shape = 1, self.na, ny, nx, 2  # grid shape
         y, x = torch.arange(ny, device=d, dtype=t), torch.arange(nx, device=d, dtype=t)
@@ -367,7 +368,8 @@ if __name__ == '__main__':
     opt = parser.parse_args()
     opt.cfg = check_yaml(opt.cfg)  # check YAML
     print_args(vars(opt))
-    device = select_device(opt.device)
+#     device = select_device(opt.device)
+    device = torch.device('cpu')
 
     # Create model
     im = torch.rand(opt.batch_size, 3, 640, 640).to(device)
