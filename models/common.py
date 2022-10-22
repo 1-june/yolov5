@@ -494,7 +494,6 @@ class DetectMultiBackend(nn.Module):
             names = yaml_load(ROOT / 'data/ImageNet.yaml')['names']  # human-readable names
 
         self.__dict__.update(locals())  # assign all variables to self
-        print('printing from common.py class DetectMultiBackend yay')
 
     def forward(self, im, augment=False, visualize=False):
         # YOLOv5 MultiBackend inference
@@ -732,10 +731,8 @@ class Detections:
         self.n = len(self.pred)  # number of images (batch size)
         self.t = tuple(x.t / self.n * 1E3 for x in times)  # timestamps (ms)
         self.s = tuple(shape)  # inference BCHW shape
-        print('models/common.py class Detections __init__ yay')
 
     def _run(self, pprint=False, show=False, save=False, crop=False, render=False, labels=True, save_dir=Path('')):
-        print('models/common.py class Detections _run yay')
         s, crops = '', []
         for i, (im, pred) in enumerate(zip(self.ims, self.pred)):
             s += f'\nimage {i + 1}/{len(self.pred)}: {im.shape[0]}x{im.shape[1]} '  # string
