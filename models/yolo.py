@@ -52,8 +52,10 @@ class Detect(nn.Module):
         self.register_buffer('anchors', torch.tensor(anchors).float().view(self.nl, -1, 2))  # shape(nl,na,2)
         self.m = nn.ModuleList(nn.Conv2d(x, self.no * self.na, 1) for x in ch)  # output conv
         self.inplace = inplace  # use inplace ops (e.g. slice assignment)
+        print('models/yolo.py class Detect __init__ yay')
 
     def forward(self, x):
+        print('models/yolo.py class Detect forward yay')
         z = []  # inference output
         for i in range(self.nl):
             x[i] = self.m[i](x[i])  # conv
@@ -110,9 +112,11 @@ class Segment(Detect):
 class BaseModel(nn.Module):
     # YOLOv5 base model
     def forward(self, x, profile=False, visualize=False):
+        print('models/yolo.py class BaseModel forward yay')
         return self._forward_once(x, profile, visualize)  # single-scale inference, train
 
     def _forward_once(self, x, profile=False, visualize=False):
+        print('models/yolo.py class BaseModel _forward_once yay')
         y, dt = [], []  # outputs
         for m in self.model:
             if m.f != -1:  # if not from previous layer
@@ -126,6 +130,7 @@ class BaseModel(nn.Module):
         return x
 
     def _profile_one_layer(self, m, x, dt):
+        print('models/yolo.py class BaseModel _profile_one_layer yay')
         c = m == self.model[-1]  # is final layer, copy input as inplace fix
         o = thop.profile(m, inputs=(x.copy() if c else x,), verbose=False)[0] / 1E9 * 2 if thop else 0  # FLOPs
         t = time_sync()
@@ -139,6 +144,7 @@ class BaseModel(nn.Module):
             LOGGER.info(f"{sum(dt):10.2f} {'-':>10s} {'-':>10s}  Total")
 
     def fuse(self):  # fuse model Conv2d() + BatchNorm2d() layers
+        print('models/yolo.py class BaseModel fuse yay')
         LOGGER.info('Fusing layers... ')
         for m in self.model.modules():
             if isinstance(m, (Conv, DWConv)) and hasattr(m, 'bn'):
@@ -153,6 +159,7 @@ class BaseModel(nn.Module):
 
     def _apply(self, fn):
         # Apply to(), cpu(), cuda(), half() to model tensors that are not parameters or registered buffers
+        print('models/yolo.py class BaseModel _apply yay')
         self = super()._apply(fn)
         m = self.model[-1]  # Detect()
         if isinstance(m, (Detect, Segment)):
@@ -166,6 +173,7 @@ class BaseModel(nn.Module):
 class DetectionModel(BaseModel):
     # YOLOv5 detection model
     def __init__(self, cfg='yolov5s.yaml', ch=3, nc=None, anchors=None):  # model, input channels, number of classes
+        print('models/yolo.py class DetectionModel __init__ yay')
         super().__init__()
         if isinstance(cfg, dict):
             self.yaml = cfg  # model dict
