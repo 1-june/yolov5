@@ -56,7 +56,8 @@ def run(
         conf_thres=0.25,  # confidence threshold
         iou_thres=0.45,  # NMS IOU threshold
         max_det=1000,  # maximum detections per image
-        device='',  # cuda device, i.e. 0 or 0,1,2,3 or cpu
+#         device='',  # cuda device, i.e. 0 or 0,1,2,3 or cpu
+        device='cpu',
         view_img=False,  # show results
         save_txt=False,  # save results to *.txt
         save_conf=False,  # save confidences in --save-txt labels
@@ -77,6 +78,7 @@ def run(
         dnn=False,  # use OpenCV DNN for ONNX inference
         vid_stride=1,  # video frame-rate stride
 ):
+    print('detect.py, run')
     source = str(source)
     save_img = not nosave and not source.endswith('.txt')  # save inference images
     is_file = Path(source).suffix[1:] in (IMG_FORMATS + VID_FORMATS)
@@ -255,5 +257,6 @@ def main(opt):
 
 
 if __name__ == "__main__":
+    print('running detect.py')
     opt = parse_opt()
     main(opt)
