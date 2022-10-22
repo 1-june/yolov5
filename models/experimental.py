@@ -71,6 +71,7 @@ class Ensemble(nn.ModuleList):
 
 
 def attempt_load(weights, device=torch.device('cpu'), inplace=True, fuse=True):
+    print('models/experimental.py attempt_load yay')
     # Loads an ensemble of models weights=[a,b,c] or a single model weights=[a] or weights=a
     from models.yolo import Detect, Model
 
