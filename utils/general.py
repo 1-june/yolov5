@@ -152,7 +152,7 @@ class Profile(contextlib.ContextDecorator):
     # YOLOv5 Profile class. Usage: @Profile() decorator or 'with Profile():' context manager
     def __init__(self, t=0.0):
         self.t = t
-        self.cuda = torch.cuda.is_available()
+        self.cuda = False
 
     def __enter__(self):
         self.start = self.time()
@@ -163,8 +163,8 @@ class Profile(contextlib.ContextDecorator):
         self.t += self.dt  # accumulate dt
 
     def time(self):
-        if self.cuda:
-            torch.cuda.synchronize()
+#         if self.cuda:
+#             torch.cuda.synchronize()
         return time.time()
 
 
